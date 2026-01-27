@@ -16,7 +16,7 @@ export default function Hero() {
   const [activeImage, setActiveImage] = useState(0);
   const ref = useRef<HTMLElement | null>(null);
 
-  /* 👀 Reveal animation */
+  /* 👀 Reveal animation */  
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
