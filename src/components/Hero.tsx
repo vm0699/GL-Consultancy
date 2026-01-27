@@ -116,9 +116,9 @@ export default function Hero() {
           {/* Stats */}
           <div className="mt-12 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
             <Stat value={6300} suffix="+" label="Students counselled" show={isVisible} />
-            <Stat value={25} suffix="+" label="Private colleges mapped" show={isVisible} />
+            <Stat value={30} suffix="+" label="Private colleges mapped" show={isVisible} />
             <Stat value={4.8} decimals={1} label="Student rating" show={isVisible} />
-            <Stat value={5} suffix="+" label="Years of trust" show={isVisible} />
+            <Stat value={10} suffix="+" label="Years of trust" show={isVisible} />
           </div>
         </div>
       </div>
