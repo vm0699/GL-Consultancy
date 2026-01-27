@@ -7,10 +7,10 @@ import clsx from "clsx";
 
 /* 🔁 Background images */
 const BACKGROUND_IMAGES = [
-  "pexels-cottonbro-6209803.jpg",
-  "/hero/college-2.jpg",
-  "/hero/college-3.jpg",
-  "/hero/college-4.jpg",
+  "/public/pexels-cottonbro-6209803.jpg",
+  "/public/pexels-cottonbro-6209803.jpg",
+  "/public/pexels-cottonbro-6209803.jpg",
+  "/public/pexels-cottonbro-6209803.jpg",
 ];
 
 export default function Hero() {
