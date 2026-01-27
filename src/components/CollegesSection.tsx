@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { colleges } from "@/data/colleges";
 
-
 export default function CollegesSection() {
   const [showAll, setShowAll] = useState(false);
   const displayedColleges = showAll ? colleges : colleges.slice(0, 4);
@@ -41,10 +40,7 @@ export default function CollegesSection() {
         <div className="mt-14 grid gap-8 sm:grid-cols-2">
           {displayedColleges.map((college) => {
             const hasDetail = Boolean(college.slug);
-
-            const Card = (
-              <CollegeCard college={college} />
-            );
+            const Card = <CollegeCard college={college} />;
 
             return hasDetail ? (
               <Link
@@ -90,12 +86,13 @@ export default function CollegesSection() {
 function CollegeCard({ college }: { college: any }) {
   return (
     <article
-      className={clsx(
-        "relative h-full overflow-hidden rounded-3xl border border-white/40",
-        "bg-white/65 backdrop-blur-xl shadow-md",
-        "transition-all duration-300",
-        "hover:-translate-y-2 hover:shadow-2xl"
-      )}
+      className="
+        relative h-full overflow-hidden rounded-3xl
+        border border-white/40
+        bg-white/65 backdrop-blur-xl
+        shadow-md transition-all duration-300
+        hover:-translate-y-2 hover:shadow-2xl
+      "
     >
       {/* Image */}
       <div
