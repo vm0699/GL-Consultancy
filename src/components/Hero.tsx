@@ -137,7 +137,7 @@ export default function Hero() {
     </section>
   );
 }
-
+  
 /* ================= STAT ================= */
 
 function Stat({
