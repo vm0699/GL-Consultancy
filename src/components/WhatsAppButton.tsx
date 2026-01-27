@@ -2,7 +2,7 @@
 
 export default function WhatsAppButton() {
     // Replace this with your actual WhatsApp number (including country code, no + or spaces)
-    const phoneNumber = "919498071974"; // Format: 919XXXXXXXXX for India
+    const phoneNumber = "916000786006"; // Format: 919XXXXXXXXX for India
     const message = "Hi! I'm interested in college admissions counselling.";
 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;

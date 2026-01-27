@@ -6,9 +6,9 @@ import Image from "next/image";
 
 /* 🔁 Background images (rotating every 30s) */
 const BACKGROUND_IMAGES = [
-  "/pexels-cottonbro-6209803.jpg",
-  "/pexels-thirdman-5327656.jpg",
-  "/pexels-olia-danilevich-5088009.jpg",
+  "/pexels-cottonbro-6209803.png",
+  "/pexels-thirdman-5327656.png",
+  "/pexels-olia-danilevich-5088009.png",
 ];
 
 export default function Hero() {

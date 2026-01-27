@@ -32,6 +32,7 @@ export const colleges: College[] = [
     rating: 4.7,
     imageUrl: "/vit-university.png",
     tags: ["Engineering", "NIRF Ranked", "Research"],
+    slug: "vit",
   },
   {
     id: "3",

@@ -4,7 +4,8 @@ import { useMemo, useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { colleges } from "@/data/colleges";
-import { feeRecords, type FeeRecord } from "@/data/srmfees"; // Importing the master data
+import { feeRecords as srmFeeRecords, type FeeRecord } from "@/data/srmfees";
+import { vitFeeRecords } from "@/data/vitfees";
 
 export default function CollegeDetailPage() {
   const params = useParams();
@@ -37,10 +38,17 @@ export default function CollegeDetailPage() {
 
   // --- CASCADING FILTER LOGIC ---
 
-  // 1. Available Campuses for this specific college slug (usually "srm")
+  // Get appropriate fee records based on college
+  const feeRecords = useMemo(() => {
+    if (slug === "srm") return srmFeeRecords;
+    if (slug === "vit") return vitFeeRecords;
+    return [];
+  }, [slug]);
+
+  // 1. Available Campuses for this specific college
   const campusOptions = useMemo(() => {
     return ["All Campuses", ...Array.from(new Set(feeRecords.map((f) => f.campus)))];
-  }, []);
+  }, [feeRecords]);
 
   // 2. Filtered list based on dropdown and search
   const filteredCourses = useMemo(() => {
@@ -51,7 +59,7 @@ export default function CollegeDetailPage() {
         course.program.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCampus && matchesSearch;
     });
-  }, [selectedCampus, searchQuery]);
+  }, [selectedCampus, searchQuery, feeRecords]);
 
   // 3. Check if filters are active
   const isFilterActive = selectedCampus !== "All Campuses" || searchQuery !== "";
@@ -69,8 +77,8 @@ export default function CollegeDetailPage() {
 
   if (!college) return null;
 
-  // For non-SRM colleges, show coming soon
-  if (slug !== "srm") {
+  // For colleges other than SRM and VIT, show coming soon
+  if (slug !== "srm" && slug !== "vit") {
     return (
       <div className="min-h-screen bg-[#faf8f3] py-12">
         <div className="max-w-4xl mx-auto px-4">
@@ -93,7 +101,10 @@ export default function CollegeDetailPage() {
     if (!userInfo) {
       setShowLoginPopup(true);
     } else {
-      window.open("https://www.srmist.edu.in/admissions", "_blank");
+      const url = slug === "srm"
+        ? "https://www.srmist.edu.in/admissions"
+        : "https://vit.ac.in/admissions";
+      window.open(url, "_blank");
     }
   };
 
@@ -103,7 +114,10 @@ export default function CollegeDetailPage() {
     sessionStorage.setItem("userInfo", JSON.stringify(userData));
     setShowLoginPopup(false);
     // Open application portal after login
-    window.open("https://www.srmist.edu.in/admissions", "_blank");
+    const url = slug === "srm"
+      ? "https://www.srmist.edu.in/admissions"
+      : "https://vit.ac.in/admissions";
+    window.open(url, "_blank");
   };
 
   const handleFeeAccess = () => {
@@ -146,17 +160,21 @@ export default function CollegeDetailPage() {
       <div className="max-w-6xl mx-auto px-4 py-16">
         {/* About College Section */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-[#1e2749] mb-6">About SRM University</h2>
+          <h2 className="text-3xl font-bold text-[#1e2749] mb-6">About {college.name}</h2>
           <div className="bg-white rounded-2xl border border-amber-200 p-8 shadow-sm">
             <p className="text-gray-700 leading-relaxed mb-4">
-              SRM Institute of Science and Technology (SRMIST) is one of the top-ranking universities in India,
-              offering a wide spectrum of undergraduate, postgraduate and doctoral programs.
+              {slug === "srm" && (
+                "SRM Institute of Science and Technology (SRMIST) is one of the top-ranking universities in India, offering a wide spectrum of undergraduate, postgraduate and doctoral programs."
+              )}
+              {slug === "vit" && (
+                "VIT (Vellore Institute of Technology) is a prestigious deemed university known for excellence in engineering education and research. With campuses in Vellore and Chennai, VIT offers world-class programs across multiple disciplines."
+              )}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-              <StatBox label="Established" value="1985" />
-              <StatBox label="Students" value="50K+" />
+              <StatBox label="Established" value={slug === "srm" ? "1985" : "1984"} />
+              <StatBox label="Students" value={slug === "srm" ? "50K+" : "40K+"} />
               <StatBox label="Programs" value={`${feeRecords.length}+`} />
-              <StatBox label="NAAC Grade" value="A++" />
+              <StatBox label="NAAC Grade" value={slug === "srm" ? "A++" : "A++"} />
             </div>
           </div>
         </section>
@@ -167,7 +185,8 @@ export default function CollegeDetailPage() {
             <div className="relative z-10">
               <h2 className="text-3xl font-bold mb-4">Admissions for 2026 Open</h2>
               <p className="mb-8 text-amber-50 max-w-xl opacity-90">
-                Official application forms for SRMIST are now live. Register your details to get direct access to the application portal.
+                {slug === "srm" && "Official application forms for SRMIST are now live. Register your details to get direct access to the application portal."}
+                {slug === "vit" && "VIT applications for 2026 are now open. Register and secure your seat through VITEEE counseling process."}
               </p>
               <button
                 onClick={handleApplicationAccess}
