@@ -31,12 +31,7 @@ export default function HomePage() {
         <TestimonialsSection />
       </section>
 
-      <section
-        id="about"
-        className="max-w-6xl mx-auto px-4 py-16 scroll-mt-24"
-      >
-        <AboutSection />
-      </section>
+      
 
       <section
         id="appointment"
