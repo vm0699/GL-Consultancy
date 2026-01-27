@@ -117,17 +117,7 @@ export default function Hero() {
             </h1>
 
             {/* Description */}
-            <p className="text-base md:text-lg text-brand-ink/80 leading-relaxed">
-              GL Consultancy is a{" "}
-              <span className="font-semibold text-brand-maroon">
-                student-first
-              </span>{" "}
-              admission consultancy for private colleges in Chennai. With over{" "}
-              <span className="font-semibold text-brand-maroon">
-                5+ years of expertise
-              </span>
-              , we help students make confident, informed decisions.
-            </p>
+            
 
             {/* CTA */}
             <div className="flex flex-wrap items-center gap-6">
