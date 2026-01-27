@@ -35,7 +35,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3"> 
           {/* Logo Image */} 
           <Image 
-            src="/logo.png"
+            src="/logogl.jpg"
             alt="GL Consultancy Logo"
             width={50}
             height={50}
