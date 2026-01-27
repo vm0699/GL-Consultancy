@@ -5,10 +5,20 @@ import CountUp from "react-countup";
 import Image from "next/image";
 import clsx from "clsx";
 
+/* 🔁 Background images */
+const BACKGROUND_IMAGES = [
+  "/hero/college-1.jpg",
+  "/hero/college-2.jpg",
+  "/hero/college-3.jpg",
+  "/hero/college-4.jpg",
+];
+
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
   const ref = useRef<HTMLElement | null>(null);
 
+  /* Intersection animation */
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -24,29 +34,42 @@ export default function Hero() {
     return () => observer.disconnect();
   }, []);
 
+  /* Background image rotation (30s) */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveImage((prev) => (prev + 1) % BACKGROUND_IMAGES.length);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       ref={ref}
       id="landing"
       className="relative min-h-screen flex items-center overflow-hidden isolate"
     >
-      {/* ================= BACKGROUND ================= */}
-      <Image
-        src="/pexels-cottonbro-6209803.jpg"
-        alt="Students choosing colleges"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover scale-110"
-      />
+      {/* ================= BACKGROUND SLIDESHOW ================= */}
+      <div className="absolute inset-0">
+        {BACKGROUND_IMAGES.map((src, index) => (
+          <Image
+            key={src}
+            src={src}
+            alt="College campus"
+            fill
+            priority={index === 0}
+            sizes="100vw"
+            className={clsx(
+              "object-cover transition-opacity duration-1000 ease-in-out scale-110",
+              index === activeImage ? "opacity-100" : "opacity-0"
+            )}
+          />
+        ))}
+      </div>
 
-      {/* Cinematic overlay */}
+      {/* Overlays */}
       <div className="absolute inset-0 bg-gradient-to-br from-brand-cream/95 via-brand-cream/85 to-brand-gold/30" />
-
-      {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.25))]" />
-
-      {/* Luxury grain */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_45%,rgba(0,0,0,0.25))]" />
       <div
         className="absolute inset-0 opacity-[0.045]"
         style={{
@@ -56,19 +79,22 @@ export default function Hero() {
         }}
       />
 
-      {/* ================= CONTENT ================= */}
+      {/* ================= CENTER CONTENT ================= */}
       <div className="relative z-10 w-full">
-        <div className="max-w-6xl mx-auto px-4 py-32">
+        <div className="max-w-6xl mx-auto px-4 py-32 flex justify-start">
           <div
             className={clsx(
-              "max-w-3xl rounded-[2rem] border border-white/40 bg-white/60 backdrop-blur-2xl shadow-[0_30px_80px_rgba(0,0,0,0.15)] p-10 md:p-14 space-y-10 transition-all duration-700",
+              "max-w-3xl rounded-[2.2rem] border border-white/40",
+              "bg-white/65 backdrop-blur-2xl",
+              "shadow-[0_35px_90px_rgba(0,0,0,0.18)]",
+              "p-10 md:p-14 space-y-10 transition-all duration-700",
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"
             )}
           >
             {/* Badge */}
-            <div className="inline-flex items-center gap-3 rounded-full border border-brand-gold/40 bg-white/70 px-6 py-2 text-xs font-semibold tracking-widest uppercase text-brand-maroon shadow-sm">
+            <div className="inline-flex items-center gap-3 rounded-full border border-brand-gold/40 bg-white/70 px-6 py-2 text-xs font-semibold tracking-widest uppercase text-brand-maroon">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75 animate-ping" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand-gold" />
@@ -98,22 +124,18 @@ export default function Hero() {
               </span>{" "}
               admission consultancy for private colleges in Chennai. With over{" "}
               <span className="font-semibold text-brand-maroon">
-                5+ years of proven expertise
+                5+ years of expertise
               </span>
-              , we help students compare colleges, explore courses, and book
-              personalized counselling — confidently and transparently.
+              , we help students make confident, informed decisions.
             </p>
 
             {/* CTA */}
             <div className="flex flex-wrap items-center gap-6">
               <a
                 href="#appointment"
-                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-brand-gold to-yellow-400 px-10 py-4 text-sm font-semibold text-brand-maroon shadow-xl transition-all hover:scale-105"
+                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-brand-gold to-yellow-400 px-10 py-4 text-sm font-semibold text-brand-maroon shadow-xl hover:scale-105 transition"
               >
-                <span className="relative z-10">
-                  Book Free Appointment
-                </span>
-                <span className="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition" />
+                Book Free Appointment
               </a>
 
               <a
@@ -137,7 +159,7 @@ export default function Hero() {
     </section>
   );
 }
-  
+
 /* ================= STAT ================= */
 
 function Stat({
@@ -154,7 +176,7 @@ function Stat({
   show: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center text-center rounded-2xl bg-white/65 backdrop-blur-lg p-6 shadow-md transition hover:-translate-y-1 hover:shadow-xl">
+    <div className="flex flex-col items-center text-center rounded-2xl bg-white/70 backdrop-blur-lg p-6 shadow-md hover:-translate-y-1 hover:shadow-xl transition">
       <p className="text-4xl md:text-5xl font-bold text-brand-gold">
         <CountUp
           start={0}
