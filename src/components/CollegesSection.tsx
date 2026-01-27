@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { colleges } from "@/data/colleges";
-import clsx from "clsx";
+
 
 export default function CollegesSection() {
   const [showAll, setShowAll] = useState(false);
