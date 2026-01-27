@@ -1,142 +1,149 @@
-//saaqib
-
-
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
 
 export default function Hero() {
   const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
-  // Trigger the count-up animation when the section comes into view
+  // Intersection Observer (better than scroll listener)
   useEffect(() => {
-    const handleScroll = () => {
-      const section = document.getElementById("landing");
-      if (section && window.scrollY + window.innerHeight > section.offsetTop) {
-        setIsInView(true);
-      }
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="landing"
-      className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-[#faf9f7] via-[#f5f3f0] to-[#f0ece8]"
+      className="relative min-h-screen flex items-center overflow-hidden bg-brand-cream"
     >
-      {/* Subtle background pattern - elegant decorative element */}
-      <div className="absolute inset-0 z-0 opacity-8">
-        <div className="h-full w-full" style={{
-          backgroundImage: `radial-gradient(circle, #d4af37 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }} />
+      {/* Elegant background pattern */}
+      <div className="absolute inset-0 z-0 opacity-[0.08]">
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, #c9a24d 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-2 pb-12 w-full">
-        <div className="flex-1 space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#8B4513]/40 bg-gradient-to-r from-[#8B4513]/5 to-[#D4AF37]/5 px-4 py-2 text-xs text-[#6B3410] font-semibold tracking-wide uppercase">
-            <span className="h-2 w-2 rounded-full bg-[#D4AF37]" />
-            Premium Education Guidance
+      <div className="relative z-10 max-w-6xl mx-auto px-4 py-20 w-full">
+        <div className="space-y-8">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-white/40 px-4 py-2 text-xs font-semibold tracking-widest uppercase text-brand-maroon">
+            <span className="h-2 w-2 rounded-full bg-brand-gold" />
+            Education Guidance · Since 2016
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[#2C1810]">
+          {/* Heading */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-brand-ink">
             Confused about{" "}
-            <span className="text-[#8B4513]">College admissions?</span>{" "}
+            <span className="text-brand-maroon">college admissions?</span>
             <br />
             We shortlist the right college for you.
           </h1>
 
-          <p className="text-base md:text-lg text-[#5a5a5a] max-w-2xl leading-relaxed font-light">
-            GL Consultancy is a student-first admission consultancy for private colleges in Chennai. 
-            With over 5 years of expertise, we help students compare colleges, explore courses, 
-            discover real student stories, and book personalized counselling sessions.
+          {/* Description */}
+          <p className="max-w-2xl text-base md:text-lg text-brand-ink/80 leading-relaxed">
+            GL Consultancy is a student-first admission consultancy helping
+            students secure admissions in top private colleges across Chennai.
+            We provide honest guidance, real student insights, and personalized
+            counselling.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-4">
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center gap-5 pt-4">
             <a
               href="#appointment"
-              className="rounded-full bg-gradient-to-r from-[#8B4513] to-[#A0522D] px-8 py-3 text-sm font-semibold text-white hover:from-[#6B3410] hover:to-[#8B4513] transition-all shadow-lg hover:shadow-xl"
+              className="rounded-full bg-brand-gold px-8 py-3 text-sm font-semibold text-brand-maroon hover:brightness-110 transition shadow-md hover:shadow-lg"
             >
-              Book Free Appointment
+              Book Free Counselling
             </a>
             <a
               href="#colleges"
-              className="text-sm text-[#8B4513] hover:text-[#D4AF37] underline-offset-4 hover:underline font-semibold transition-colors"
+              className="text-sm font-semibold text-brand-maroon hover:text-brand-gold underline-offset-4 hover:underline transition"
             >
               Browse Chennai colleges
             </a>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl pt-12">
-            {/* Students Count */}
-            <div className="flex flex-col items-center p-4 rounded-lg hover:bg-white/40 transition-colors">
-              <p className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#D4AF37]">
-                <CountUp
-                  start={0}
-                  end={isInView ? 6300 : 0}
-                  duration={3}
-                  separator=","
-                  suffix="+"
-                />
-              </p>
-              <p className="text-sm md:text-base text-[#6B3410] mt-3 text-center font-semibold">
-                Students counselled
-              </p>
-            </div>
-
-            {/* Colleges Count */}
-            <div className="flex flex-col items-center p-4 rounded-lg hover:bg-white/40 transition-colors">
-              <p className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#D4AF37]">
-                <CountUp
-                  start={0}
-                  end={isInView ? 25 : 0}
-                  duration={3.5}
-                  separator=","
-                  suffix="+"
-                />
-              </p>
-              <p className="text-sm md:text-base text-[#6B3410] mt-3 text-center font-semibold">
-                Private colleges mapped
-              </p>
-            </div>
-
-            {/* Average Rating */}
-            <div className="flex flex-col items-center p-4 rounded-lg hover:bg-white/40 transition-colors">
-              <p className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#D4AF37]">
-                <CountUp
-                  start={0}
-                  end={isInView ? 4.8 : 0}
-                  duration={2.5}
-                  separator=","
-                  decimals={1}
-                />
-              </p>
-              <p className="text-sm md:text-base text-[#6B3410] mt-3 text-center font-semibold">
-                Average student rating
-              </p>
-            </div>
-
-            {/* Years of Experience */}
-            <div className="flex flex-col items-center p-4 rounded-lg hover:bg-white/40 transition-colors">
-              <p className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#D4AF37]">
-                <CountUp
-                  start={0}
-                  end={isInView ? 5 : 0}
-                  duration={3}
-                  separator=","
-                  suffix="+"
-                />
-              </p>
-              <p className="text-sm md:text-base text-[#6B3410] mt-3 text-center font-semibold">
-                Years of Experience
-              </p>
-            </div>
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pt-14 max-w-4xl">
+            <Stat
+              value={6300}
+              suffix="+"
+              label="Students counselled"
+              isInView={isInView}
+            />
+            <Stat
+              value={25}
+              suffix="+"
+              label="Partner colleges"
+              isInView={isInView}
+            />
+            <Stat
+              value={4.8}
+              decimals={1}
+              label="Average rating"
+              isInView={isInView}
+            />
+            <Stat
+              value={5}
+              suffix="+"
+              label="Years of experience"
+              isInView={isInView}
+            />
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/* ---------- Reusable Stat Component ---------- */
+
+function Stat({
+  value,
+  suffix = "",
+  decimals = 0,
+  label,
+  isInView,
+}: {
+  value: number;
+  suffix?: string;
+  decimals?: number;
+  label: string;
+  isInView: boolean;
+}) {
+  return (
+    <div className="flex flex-col items-center text-center rounded-xl p-4 hover:bg-white/40 transition">
+      <p className="text-5xl md:text-6xl font-bold text-brand-gold">
+        <CountUp
+          start={0}
+          end={isInView ? value : 0}
+          duration={2.8}
+          suffix={suffix}
+          decimals={decimals}
+        />
+      </p>
+      <p className="mt-3 text-sm md:text-base font-semibold text-brand-maroon">
+        {label}
+      </p>
+    </div>
   );
 }
