@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
 import Image from "next/image";
-
+ 
 /* 🔁 Background images */
 const BACKGROUND_IMAGES = [
   "/pexels-cottonbro-6209803.jpg",
