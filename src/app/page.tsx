@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import CompanyIntroSection from "@/components/CompanyIntroSection";
 import CollegesSection from "@/components/CollegesSection";
 import CoursesSection from "@/components/CoursesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -9,6 +10,8 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+
+      <CompanyIntroSection />
 
       <section
         id="colleges"
@@ -31,7 +34,7 @@ export default function HomePage() {
         <TestimonialsSection />
       </section>
 
-      
+
 
       <section
         id="appointment"

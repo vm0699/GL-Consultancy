@@ -56,9 +56,8 @@ export default function Hero() {
           fill
           priority={index === 0}
           sizes="100vw"
-          className={`object-cover scale-110 transition-opacity duration-1000 ease-in-out ${
-            index === activeImage ? "opacity-100" : "opacity-0"
-          }`}
+          className={`object-cover scale-110 transition-opacity duration-1000 ease-in-out ${index === activeImage ? "opacity-100" : "opacity-0"
+            }`}
         />
       ))}
 
@@ -69,30 +68,33 @@ export default function Hero() {
       {/* ================= CENTER CARD ================= */}
       <div className="relative z-10 w-full px-4">
         <div
-          className={`max-w-3xl w-full border border-white/30 bg-white/70 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] p-10 md:p-14 rounded-3xl transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`max-w-3xl w-full border border-white/30 bg-white/70 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] p-10 md:p-14 rounded-3xl transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
         >
           {/* Badge */}
-          <div className="inline-flex items-center gap-3 border border-brand-gold/40 bg-white/80 px-6 py-2 text-xs font-semibold tracking-widest uppercase text-brand-maroon rounded-full shadow-sm">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75 animate-ping" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand-gold" />
-            </span>
-            Premium Education Guidance
+          <div className="flex flex-wrap gap-3 items-center">
+            <div className="inline-flex items-center gap-3 border border-brand-gold/40 bg-white/80 px-6 py-2 text-xs font-semibold tracking-widest uppercase text-brand-maroon rounded-full shadow-sm">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75 animate-ping" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand-gold" />
+              </span>
+              Tamilnadu's Leading Educational Consultancy
+            </div>
+            <div className="inline-flex items-center border border-emerald-400/40 bg-emerald-50/80 px-5 py-2 text-xs font-bold tracking-wide uppercase text-emerald-700 rounded-full shadow-sm">
+              ✓ 100% Success Rate
+            </div>
           </div>
 
           {/* Heading */}
-          <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-brand-ink">
-            Confused about{" "}
+          <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-brand-ink">
+            Your Dream{" "}
             <span className="relative text-brand-maroon inline-block">
-              College admissions
+              College Admission
               <span className="absolute -bottom-1 left-0 h-[3px] w-full bg-gradient-to-r from-brand-gold to-yellow-400 rounded-full" />
             </span>
-            ?
-            <br />
+            .<br />
             <span className="text-brand-ink/90 font-medium">
-              We shortlist the right college for you.
+              Made Simple & Guaranteed.
             </span>
           </h1>
 
@@ -114,7 +116,7 @@ export default function Hero() {
           </div>
 
           {/* Stats */}
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <Stat value={6300} suffix="+" label="Students counselled" show={isVisible} />
             <Stat value={30} suffix="+" label="Private colleges mapped" show={isVisible} />
             <Stat value={4.8} decimals={1} label="Student rating" show={isVisible} />
@@ -141,11 +143,11 @@ function Stat({
   show: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center text-center bg-white/70 backdrop-blur-lg p-5 sm:p-6 rounded-2xl shadow-md transition-transform hover:-translate-y-1 hover:shadow-xl">
+    <div className="flex flex-col items-center text-center bg-white/70 backdrop-blur-lg p-6 sm:p-7 md:p-8 rounded-2xl shadow-md transition-transform hover:-translate-y-1 hover:shadow-xl">
       <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-gold">
         <CountUp start={0} end={show ? value : 0} duration={2.8} decimals={decimals} suffix={suffix} />
       </p>
-      <p className="mt-1 text-sm sm:text-base font-semibold text-brand-maroon">{label}</p>
+      <p className="mt-2 text-sm sm:text-base font-semibold text-brand-maroon">{label}</p>
     </div>
   );
 }

@@ -43,7 +43,7 @@ export default function Navbar() {
             priority
           />
           <div>
-            <span className="block text-xl md:text-2xl font-bold text-[#1e2749]" style={{ fontFamily: "'Cinzel', serif", letterSpacing: '0.15em' }}>
+            <span className="block text-xl md:text-2xl font-bold text-[#1e2749]" style={{ fontFamily: "'Inter', sans-serif", letterSpacing: '0.02em' }}>
               GL CONSULTANCY
             </span>
           </div>

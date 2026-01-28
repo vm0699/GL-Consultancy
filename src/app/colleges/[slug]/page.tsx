@@ -130,9 +130,9 @@ export default function CollegeDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#faf8f3]">
-      {/* Hero Section */}
+      {/* Hero Section - Taller Banner */}
       <div
-        className="h-64 bg-cover bg-center relative"
+        className="h-80 md:h-96 bg-cover bg-center relative"
         style={{ backgroundImage: `url(${college.imageUrl})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70" />
@@ -162,14 +162,32 @@ export default function CollegeDetailPage() {
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-[#1e2749] mb-6">About {college.name}</h2>
           <div className="bg-white rounded-2xl border border-amber-200 p-8 shadow-sm">
-            <p className="text-gray-700 leading-relaxed mb-4">
-              {slug === "srm" && (
-                "SRM Institute of Science and Technology (SRMIST) is one of the top-ranking universities in India, offering a wide spectrum of undergraduate, postgraduate and doctoral programs."
-              )}
-              {slug === "vit" && (
-                "VIT (Vellore Institute of Technology) is a prestigious deemed university known for excellence in engineering education and research. With campuses in Vellore and Chennai, VIT offers world-class programs across multiple disciplines."
-              )}
-            </p>
+            {slug === "srm" && (
+              <div className="space-y-4">
+                <p className="text-gray-700 leading-relaxed">
+                  SRM Institute of Science and Technology (SRMIST) is one of India's premier deemed-to-be universities, recognized for its academic excellence and cutting-edge research facilities. Established in 1985, SRMIST has grown into a multi-campus institution with state-of-the-art infrastructure spread across Kattankulathur, Ramapuram, and Vadapalani campuses in Tamil Nadu.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  The university offers a comprehensive range of undergraduate, postgraduate, and doctoral programs across engineering, management, medical sciences, and humanities. With a student strength of over 50,000 and a highly qualified faculty, SRMIST maintains a robust industry interface, ensuring students receive practical exposure through internships, projects, and placements with top-tier companies.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  SRMIST holds NAAC A++ accreditation and consistently ranks among India's top private universities. The institution emphasizes research and innovation, with numerous patents and publications to its credit. Students benefit from world-class laboratories, an extensive library, sports facilities, and vibrant campus life, making SRMIST a holistic educational destination for aspiring professionals.
+                </p>
+              </div>
+            )}
+            {slug === "vit" && (
+              <div className="space-y-4">
+                <p className="text-gray-700 leading-relaxed">
+                  VIT (Vellore Institute of Technology) is a prestigious deemed-to-be university established in 1984, renowned for its excellence in engineering education, research, and global collaborations. With campuses in Vellore and Chennai, VIT has earned a stellar reputation as one of India's leading technical institutions, consistently ranked among the top universities by NIRF and other national ranking bodies.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  The university offers a diverse portfolio of programs across engineering, technology, sciences, and management, attracting over 40,000 students from all corners of India and abroad. VIT's unique admission process through VITEEE ensures merit-based selection, fostering a competitive yet collaborative academic environment. The institution prides itself on its world-class infrastructure, including advanced research centers, well-equipped laboratories, and extensive digital libraries.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  VIT maintains strong industry partnerships with global corporations, facilitating exceptional placement opportunities, internships, and live projects for students. The university's emphasis on research and innovation is reflected in its numerous patents, international publications, and entrepreneurship initiatives. With NAAC A++ accreditation and a commitment to holistic development, VIT prepares students to become industry-ready professionals and future leaders in their respective fields.
+                </p>
+              </div>
+            )}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
               <StatBox label="Established" value={slug === "srm" ? "1985" : "1984"} />
               <StatBox label="Students" value={slug === "srm" ? "50K+" : "40K+"} />
