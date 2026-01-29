@@ -9,75 +9,72 @@ export default function CollegesSection() {
   const displayedColleges = showAll ? colleges : colleges.slice(0, 4);
 
   return (
-    <section className="relative py-24">
-      <div className="max-w-6xl mx-auto px-4">
-
-        {/* ================= HEADER ================= */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-brand-ink">
-              Featured{" "}
-              <span className="text-brand-maroon relative">
-                Chennai Colleges
-                <span className="absolute -bottom-1 left-0 h-[3px] w-full bg-brand-gold/40 rounded-full" />
-              </span>
-            </h2>
-            <p className="mt-4 text-sm md:text-base text-brand-ink/70 leading-relaxed">
-              A carefully curated list of reputed private colleges in and around
-              Chennai. Compare{" "}
-              <span className="font-semibold text-brand-maroon">fees</span>,{" "}
-              <span className="font-semibold text-brand-maroon">placements</span>,
-              and campus culture — before you decide.
-            </p>
-          </div>
-
-          <span className="inline-flex self-start md:self-auto rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-1.5 text-xs font-semibold text-brand-maroon">
-            Engineering • Arts & Science • Management
-          </span>
+    <div className="relative">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-brand-ink">
+            Featured{" "}
+            <span className="text-brand-maroon relative">
+              Chennai Colleges
+              <span className="absolute -bottom-1 left-0 h-[3px] w-full bg-brand-gold/40 rounded-full" />
+            </span>
+          </h2>
+          <p className="mt-4 text-sm md:text-base text-brand-ink/70 leading-relaxed">
+            A carefully curated list of reputed private colleges in and around
+            Chennai. Compare{" "}
+            <span className="font-semibold text-brand-maroon">fees</span>,{" "}
+            <span className="font-semibold text-brand-maroon">placements</span>,
+            and campus culture — before you decide.
+          </p>
         </div>
 
-        {/* ================= GRID ================= */}
-        <div className="mt-14 grid gap-8 sm:grid-cols-2">
-          {displayedColleges.map((college) => {
-            const hasDetail = Boolean(college.slug);
-            const Card = <CollegeCard college={college} />;
-
-            return hasDetail ? (
-              <Link
-                key={college.id}
-                href={`/colleges/${college.slug}`}
-                className="group"
-              >
-                {Card}
-              </Link>
-            ) : (
-              <div key={college.id}>{Card}</div>
-            );
-          })}
-        </div>
-
-        {/* ================= ACTION ================= */}
-        <div className="mt-14 flex justify-center">
-          {!showAll ? (
-            colleges.length > 4 && (
-              <button
-                onClick={() => setShowAll(true)}
-                className="rounded-full bg-gradient-to-r from-brand-gold to-yellow-400 px-8 py-3 text-sm font-semibold text-brand-maroon shadow-lg hover:scale-105 transition"
-              >
-                Show {colleges.length - 4} More Colleges
-              </button>
-            )
-          ) : (
-            <button
-              onClick={() => setShowAll(false)}
-              className="rounded-full bg-slate-900 px-8 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800 transition"
-            >
-              Show Less
-            </button>
-          )}
-        </div>
+        <span className="inline-flex self-start md:self-auto rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-1.5 text-xs font-semibold text-brand-maroon">
+          Engineering • Arts & Science • Management
+        </span>
       </div>
-    </section>
+
+      {/* ================= GRID ================= */}
+      <div className="mt-14 grid gap-8 sm:grid-cols-2">
+        {displayedColleges.map((college) => {
+          const hasDetail = Boolean(college.slug);
+          const Card = <CollegeCard college={college} />;
+
+          return hasDetail ? (
+            <Link
+              key={college.id}
+              href={`/colleges/${college.slug}`}
+              className="group"
+            >
+              {Card}
+            </Link>
+          ) : (
+            <div key={college.id}>{Card}</div>
+          );
+        })}
+      </div>
+
+      {/* ================= ACTION ================= */}
+      <div className="mt-14 flex justify-center">
+        {!showAll ? (
+          colleges.length > 4 && (
+            <button
+              onClick={() => setShowAll(true)}
+              className="rounded-full bg-gradient-to-r from-brand-gold to-yellow-400 px-8 py-3 text-sm font-semibold text-brand-maroon shadow-lg hover:scale-105 transition"
+            >
+              Show {colleges.length - 4} More Colleges
+            </button>
+          )
+        ) : (
+          <button
+            onClick={() => setShowAll(false)}
+            className="rounded-full bg-slate-900 px-8 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800 transition"
+          >
+            Show Less
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -156,6 +153,38 @@ function CollegeCard({ college }: { college: any }) {
             </span>
           ))}
         </div>
+
+        {/* Placement Packages */}
+        {(college.avgPackage || college.highestPackage) && (
+          <div className="pt-3 mt-3 border-t border-amber-100">
+            <div className="grid grid-cols-2 gap-3">
+              {college.avgPackage && (
+                <div className="text-center">
+                  <p className="text-xs text-brand-ink/60 mb-1">Avg. Package</p>
+                  <p className="text-base font-bold text-emerald-600">{college.avgPackage}</p>
+                </div>
+              )}
+              {college.highestPackage && (
+                <div className="text-center">
+                  <p className="text-xs text-brand-ink/60 mb-1">Highest Package</p>
+                  <p className="text-base font-bold text-amber-600">{college.highestPackage}</p>
+                </div>
+              )}
+            </div>
+
+            {/* 20L+ Badge for SRM and VIT */}
+            {(college.slug === "srm" || college.slug === "vit") && (
+              <div className="mt-3 flex justify-center">
+                <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full shadow-md">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span className="text-[10px] font-bold">20 L+ Packages Available</span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </article>
   );

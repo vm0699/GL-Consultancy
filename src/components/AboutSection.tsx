@@ -1,60 +1,97 @@
 export default function AboutSection() {
   return (
-    <div className="grid gap-8 md:grid-cols-[1.1fr,0.9fr] items-start">
-      <div>
-        <h2 className="text-2xl md:text-3xl font-semibold">About us</h2>
-        <p className="mt-3 text-sm text-[#4a5568]">
-          GL Consultancy is an independent admission consultancy
-          focused only on private colleges in and around Chennai. We are not
-          owned by any college, so we are free to tell you what is actually
-          happening on campus — placements, crowd, hostel, and real fees.
-        </p>
+    <div>
+      <h2 className="text-2xl md:text-3xl font-semibold text-[#1e2749] mb-8">
+        About GL Consultancy
+      </h2>
 
-        <p className="mt-3 text-sm text-[#4a5568]">
-          Our team consists of recent graduates and senior counsellors who know
-          the ground reality of OMR, ECR, Tambaram, Poonamallee and central
-          Chennai colleges. We keep a live database of cut-offs, fee
-          structures, and placement reports.
-        </p>
+      <div className="grid gap-8 lg:grid-cols-2 items-start">
+        <div className="space-y-4">
+          <div className="bg-white rounded-2xl border border-amber-200 p-6 shadow-sm">
+            <h3 className="text-lg font-bold text-[#1e2749] mb-3">Who We Are</h3>
+            <p className="text-sm text-[#4a5568] leading-relaxed">
+              GL Consultancy is a group of dedicated teachers and entrepreneurs who came together with a single mission: to support the welfare of students and parents who are struggling with the complex college admission process. We understand the confusion, stress, and uncertainty that families face when choosing the right college and course for their child's future.
+            </p>
+            <p className="text-sm text-[#4a5568] leading-relaxed mt-3">
+              What was once a daunting and overwhelming journey has now been made easier through our expert guidance, transparent approach, and genuine commitment to student success. We believe every student deserves access to quality education and proper guidance, which is why we work tirelessly to ensure no family is left struggling alone during this crucial decision-making phase.
+            </p>
+          </div>
 
-        <div className="mt-5 grid grid-cols-3 gap-4 text-xs">
-          <div className="rounded-2xl border border-amber-200 bg-white p-3">
-            <p className="text-lg font-semibold text-amber-400">5+</p>
-            <p className="mt-1 text-[#4a5568]">Years of counselling data</p>
+          <div className="bg-white rounded-2xl border border-amber-200 p-6 shadow-sm">
+            <h3 className="text-lg font-bold text-[#1e2749] mb-3">Our Team</h3>
+            <p className="text-sm text-[#4a5568] leading-relaxed">
+              We are fully experienced and up-to-date on the latest fee structures, current placement statistics, and ongoing course updates across all major colleges in Tamil Nadu. Our team maintains real-time knowledge of what's happening on campus, which specializations are in demand, and which colleges offer the best opportunities for each field.
+            </p>
+            <p className="text-sm text-[#4a5568] leading-relaxed mt-3">
+              This comprehensive understanding enables us to provide students with accurate, relevant guidance that gives them a brighter future. We don't just look at today's trends—we consider long-term career prospects, industry requirements, and emerging opportunities to ensure your investment in education pays off.
+            </p>
           </div>
-          <div className="rounded-2xl border border-amber-200 bg-white p-3">
-            <p className="text-lg font-semibold text-amber-400">30+</p>
-            <p className="mt-1 text-[#4a5568]">Partner colleges visited</p>
-          </div>
-          <div className="rounded-2xl border border-amber-200 bg-white p-3">
-            <p className="text-lg font-semibold text-amber-400">24x7</p>
-            <p className="mt-1 text-[#4a5568]">WhatsApp query support</p>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+              <p className="text-2xl font-bold text-amber-600">10+</p>
+              <p className="mt-1 text-xs text-[#4a5568]">Years Experience</p>
+            </div>
+            <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+              <p className="text-2xl font-bold text-amber-600">2000+</p>
+              <p className="mt-1 text-xs text-[#4a5568]">Students/Year</p>
+            </div>
+            <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-4 text-center">
+              <p className="text-2xl font-bold text-amber-600">100%</p>
+              <p className="mt-1 text-xs text-[#4a5568]">Seat Assured</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="rounded-3xl border border-amber-200 bg-white p-4 space-y-3 text-xs shadow-md">
-        <h3 className="text-sm font-semibold text-[#1e2749]">
-          What makes us different?
-        </h3>
-        <ul className="space-y-2 text-[#4a5568]">
-          <li className="flex gap-2">
-            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400" />
-            <span>We give you a comparison sheet of 3–5 colleges, not just one name.</span>
-          </li>
-          <li className="flex gap-2">
-            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400" />
-            <span>We clearly separate government fees, college fees and “extra” charges.</span>
-          </li>
-          <li className="flex gap-2">
-            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400" />
-            <span>We encourage campus visits and student interactions before you lock a seat.</span>
-          </li>
-          <li className="flex gap-2">
-            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400" />
-            <span>No surprise “service charges” during seat blocking.</span>
-          </li>
-        </ul>
+        <div className="space-y-4">
+          <div className="rounded-2xl border border-amber-200 bg-white p-6 shadow-sm">
+            <h3 className="text-lg font-bold text-[#1e2749] mb-4">
+              What Makes Us Different?
+            </h3>
+            <ul className="space-y-3 text-sm text-[#4a5568]">
+              <li className="flex gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+                <span><strong className="text-[#1e2749]">10 Years of Experience:</strong> A decade of proven expertise in college admissions and student counselling across Tamil Nadu.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+                <span><strong className="text-[#1e2749]">100% Assured Seat:</strong> We guarantee admission in a reputed college that matches your requirements and budget.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+                <span><strong className="text-[#1e2749]">Tamil Nadu's Leading Consultancy:</strong> Recognized as one of the most trusted educational consultancies in the region.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+                <span><strong className="text-[#1e2749]">2000+ Students Every Year:</strong> We successfully guide thousands of students annually to their dream colleges.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+                <span><strong className="text-[#1e2749]">Parent-Friendly Approach:</strong> We understand parental concerns and work closely with families to ensure everyone is confident and comfortable with the decision.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm">
+            <h3 className="text-base font-bold text-emerald-800 mb-2">
+              📞 Need Immediate Help?
+            </h3>
+            <p className="text-sm text-emerald-700 mb-3">
+              Our counsellors are available on WhatsApp for instant queries about admissions, fees, and college selection.
+            </p>
+            <a
+              href="https://wa.me/916000786006"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-full transition-colors text-sm"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+              </svg>
+              Chat on WhatsApp
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

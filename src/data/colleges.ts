@@ -3,12 +3,14 @@ export type College = {
   name: string;
   area?: string;
   campuses?: string[];
-  affiliation: string;
+  affiliation?: string;
   popularCourses: string[];
   rating: number;
   imageUrl: string;
   tags: string[];
   slug?: string;
+  avgPackage?: string;
+  highestPackage?: string;
 };
 
 export const colleges: College[] = [
@@ -22,6 +24,8 @@ export const colleges: College[] = [
     imageUrl: "/srm1.jpg",
     tags: ["Engineering", "Deemed University", "NAAC A++"],
     slug: "srm",
+    avgPackage: "6.5 LPA",
+    highestPackage: "54 LPA",
   },
   {
     id: "2",
@@ -33,16 +37,21 @@ export const colleges: College[] = [
     imageUrl: "/vit1.jpg",
     tags: ["Engineering", "NIRF Ranked", "Research"],
     slug: "vit",
+    avgPackage: "7.2 LPA",
+    highestPackage: "62 LPA",
   },
   {
     id: "3",
     name: "Saveetha University",
     area: "Thandalam, Chennai",
-    affiliation: "Established under Sec. 3 of UGC Act, 1956",
+    affiliation: "Deemed to be University",
     popularCourses: ["B.E. CSE", "MBBS", "BDS"],
-    rating: 4.3,
-    imageUrl: "/saveetha-university.png",
-    tags: ["Engineering", "Medical", "Dental"],
+    rating: 4.4,
+    imageUrl:
+      "https://images.pexels.com/photos/256490/pexels-photo-256490.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    tags: ["Engineering", "Medical", "NAAC A"],
+    avgPackage: "5.8 LPA",
+    highestPackage: "25 LPA",
   },
   {
     id: "4",
@@ -53,9 +62,35 @@ export const colleges: College[] = [
     rating: 4.5,
     imageUrl: "/sathyabama-university.png",
     tags: ["Engineering", "NAAC A++", "Research"],
+    avgPackage: "5.5 LPA",
+    highestPackage: "28 LPA",
   },
   {
     id: "5",
+    name: "SRM Easwari Engineering College",
+    area: "Ramapuram, Chennai",
+    affiliation: "Anna University",
+    popularCourses: ["B.E. CSE", "B.E. ECE", "B.E. Mech"],
+    rating: 4.3,
+    imageUrl: "/srm1.jpg",
+    tags: ["Engineering", "AICTE Approved", "NBA Accredited"],
+    avgPackage: "4.2 LPA",
+    highestPackage: "15 LPA",
+  },
+  {
+    id: "6",
+    name: "SRM Valliammai Engineering College",
+    area: "Kattankulathur, Chennai",
+    affiliation: "Anna University",
+    popularCourses: ["B.E. CSE", "B.E. IT", "B.E. EEE"],
+    rating: 4.2,
+    imageUrl: "/srm1.jpg",
+    tags: ["Engineering", "AICTE Approved", "Anna University"],
+    avgPackage: "4.5 LPA",
+    highestPackage: "18 LPA",
+  },
+  {
+    id: "8",
     name: "Hindustan University",
     area: "Padur, Chennai",
     affiliation: "Deemed University",
@@ -64,9 +99,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1438072/pexels-photo-1438072.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "NAAC A", "Aerospace"],
+    avgPackage: "5.0 LPA",
+    highestPackage: "20 LPA",
   },
   {
-    id: "6",
+    id: "9",
     name: "Sri Ramachandra Institute of Higher Education and Research",
     area: "Porur, Chennai",
     affiliation: "Deemed to be University, Category A Plus",
@@ -75,6 +112,8 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1205651/pexels-photo-1205651.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Medical", "NAAC A+", "Research"],
+    avgPackage: "6.0 LPA",
+    highestPackage: "22 LPA",
   },
   {
     id: "7",
@@ -86,9 +125,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1120344/pexels-photo-1120344.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "Medical", "Multidisciplinary"],
+    avgPackage: "4.8 LPA",
+    highestPackage: "16 LPA",
   },
   {
-    id: "8",
+    id: "10",
     name: "Vels University",
     area: "Pallavaram, Chennai",
     affiliation: "Deemed to be University",
@@ -97,9 +138,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "Management", "NAAC A++"],
+    avgPackage: "4.0 LPA",
+    highestPackage: "14 LPA",
   },
   {
-    id: "9",
+    id: "11",
     name: "AMET University",
     area: "Kanathur, Chennai",
     affiliation: "Deemed University",
@@ -108,9 +151,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "Marine", "Maritime"],
+    avgPackage: "5.2 LPA",
+    highestPackage: "18 LPA",
   },
   {
-    id: "10",
+    id: "12",
     name: "Dr. M.G.R. Educational and Research Institute",
     area: "Maduravoyal, Chennai",
     affiliation: "Deemed to be University",
@@ -119,9 +164,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/159844/cellular-education-classroom-159844.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "Medical", "NAAC A"],
+    avgPackage: "4.5 LPA",
+    highestPackage: "15 LPA",
   },
   {
-    id: "11",
+    id: "13",
     name: "Ponnaiyah Ramajayam Institute of Science & Technology",
     area: "Vallam, Thanjavur",
     affiliation: "Deemed to be University under U/S 3 of UGC Act, 1956",
@@ -130,9 +177,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "Management", "Pharmacy"],
+    avgPackage: "3.8 LPA",
+    highestPackage: "12 LPA",
   },
   {
-    id: "12",
+    id: "14",
     name: "Crescent Institute of Science & Technology",
     area: "Vandalur, Chennai",
     affiliation: "Deemed to be University",
@@ -141,9 +190,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1184579/pexels-photo-1184579.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "NAAC A", "B.S. Abdur Rahman"],
+    avgPackage: "5.5 LPA",
+    highestPackage: "22 LPA",
   },
   {
-    id: "13",
+    id: "15",
     name: "Vel Tech Rangarajan Dr. Sagunthala R&D Institute",
     area: "Avadi, Chennai",
     affiliation: "Deemed to be University",
@@ -152,9 +203,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1438072/pexels-photo-1438072.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "Research", "Innovation"],
+    avgPackage: "4.2 LPA",
+    highestPackage: "16 LPA",
   },
   {
-    id: "14",
+    id: "16",
     name: "Meenakshi Academy of Higher Education & Research",
     area: "Alapakkam, Chennai",
     affiliation: "Deemed to be University",
@@ -163,9 +216,11 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/4050316/pexels-photo-4050316.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Medical", "Dental", "NAAC A+"],
+    avgPackage: "6.5 LPA",
+    highestPackage: "24 LPA",
   },
   {
-    id: "15",
+    id: "17",
     name: "Chettinad Dental College & Research Institute",
     area: "Kelambakkam, Chennai",
     affiliation: "Deemed University",

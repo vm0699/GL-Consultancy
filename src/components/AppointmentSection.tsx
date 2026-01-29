@@ -82,7 +82,7 @@ export default function AppointmentSection() {
                 name="phone"
                 required
                 className="w-full rounded-xl border border-amber-200 bg-white px-3 py-2 text-sm text-[#1e2749] outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-100"
-                placeholder="+91..."
+                placeholder="+916000786006"
               />
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function AppointmentSection() {
           <p className="mt-2">
             You can also message us directly on WhatsApp at{" "}
             <span className="font-semibold text-amber-600">
-              +91-90000 00000
+              +91-6000786006
             </span>{" "}
             (placeholder – we’ll change this later).
           </p>

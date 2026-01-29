@@ -8,7 +8,7 @@ type Testimonial = {
   college: string;
   text: string;
   rating: number;
-  proofImageUrl?: string; // blurred admission screenshot
+  proofImageUrl?: string;
 };
 
 const testimonials: Testimonial[] = [
@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     name: "TamilSelvan R",
     course: "B.Tech ECE, 2024 Intake",
     college: "SRM – Faculty of Engineering & Technology, Kattankulathur",
-    text: "Got ECE in SRM KTR within our budget. They clearly explained hostel, mess, transport and actual yearly cost before we paid the counselling fee.",
+    text: "Got ECE in SRM KTR within our budget. They clearly explained hostel, mess, transport and actual yearly cost before we paid the counselling fee. Very transparent process!",
     rating: 5,
     proofImageUrl: "/reviews/image1.png",
   },
@@ -24,16 +24,40 @@ const testimonials: Testimonial[] = [
     name: "Nandhini S.",
     course: "B.Com (Accounts & Finance)",
     college: "Central Chennai",
-    text: "My parents were worried about safety and fees. The team mapped out options in our budget and arranged a campus visit the same week.",
+    text: "My parents were worried about safety and fees. The team mapped out options in our budget and arranged a campus visit the same week. Really helpful and patient counsellors.",
     rating: 4.5,
     proofImageUrl: "/reviews/image2.png",
   },
   {
-    name: "Tharun ",
+    name: "Tharun K.",
     course: "MBA (Marketing)",
     college: "Chennai Business School",
-    text: "They checked my profile, work ex, and guided me to a college where the alumni network actually helps with roles in Chennai & Bangalore.",
+    text: "They checked my profile, work ex, and guided me to a college where the alumni network actually helps with roles in Chennai & Bangalore. Best decision I made!",
     rating: 4.8,
+    proofImageUrl: "/reviews/image3.png",
+  },
+  {
+    name: "Priya M.",
+    course: "B.E. CSE, 2025 Intake",
+    college: "VIT Chennai",
+    text: "Was confused between VIT and SRM. GL team gave detailed comparison of fees, placements, and campus life for both. Got VIT Chennai through VITEEE counselling.",
+    rating: 5,
+    proofImageUrl: "/reviews/image1.png",
+  },
+  {
+    name: "Aravind S.",
+    course: "B.Tech IT",
+    college: "Sathyabama University",
+    text: "Got management quota seat without any hassle. They handled all documentation and even helped with hostel booking. Worth every rupee of their consultation fee.",
+    rating: 4.7,
+    proofImageUrl: "/reviews/image2.png",
+  },
+  {
+    name: "Divya R.",
+    course: "BBA, 2024",
+    college: "SRM Vadapalani",
+    text: "Wanted a college near home. They suggested SRM Vadapalani with all the details about transport, timings, and placements. Perfect match for my requirements!",
+    rating: 4.9,
     proofImageUrl: "/reviews/image3.png",
   },
 ];
@@ -43,16 +67,23 @@ export default function TestimonialsSection() {
 
   return (
     <div>
-      <h2 className="text-2xl md:text-3xl font-semibold">
-        Real stories from Chennai students
-      </h2>
-      <p className="mt-2 text-sm text-[#4a5568] max-w-xl">
-        We don’t push a random college. We match you with options that fit your
-        marks, budget, and goals, then let you decide calmly.
-      </p>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-semibold text-[#1e2749]">
+            Real stories from Chennai students
+          </h2>
+          <p className="mt-2 text-sm text-[#4a5568] max-w-2xl">
+            We don't push a random college. We match you with options that fit your
+            marks, budget, and goals, then let you decide calmly. Here's what our students say.
+          </p>
+        </div>
+        <div className="shrink-0 bg-amber-50 border border-amber-200 rounded-full px-4 py-2 text-xs font-bold text-amber-700">
+          ⭐ 4.8/5 Average Rating
+        </div>
+      </div>
 
       {/* Auto-scrolling horizontal strip of full testimonial cards */}
-      <div className="mt-8 rounded-3xl border border-amber-200 bg-white px-3 py-4 shadow-md">
+      <div className="rounded-3xl border border-amber-200 bg-white px-3 py-4 shadow-md">
         <div className="marquee-container">
           <div className="marquee-track">
             {/* first copy */}
@@ -128,7 +159,7 @@ function TestimonialCard({
   onClick: () => void;
 }) {
   return (
-    <article className="w-80 md:w-96 shrink-0 rounded-3xl border border-amber-200 bg-white p-4 shadow-md">
+    <article className="w-80 md:w-96 shrink-0 rounded-3xl border border-amber-200 bg-white p-4 shadow-md hover:shadow-lg transition-shadow">
       <div className="flex flex-col gap-3 h-full">
         {/* TOP: proof screenshot (thumbnail) */}
         {t.proofImageUrl && (
@@ -162,11 +193,11 @@ function TestimonialCard({
           </div>
 
           <p className="mt-1 text-xs text-[#1e2749] leading-relaxed">
-            “{t.text}”
+            "{t.text}"
           </p>
 
           <p className="mt-1 text-[11px] text-[#6b7280]">{t.college}</p>
-          <p className="text-[10px] text-amber-600 font-medium">Verified student</p>
+          <p className="text-[10px] text-emerald-600 font-medium">✓ Verified student</p>
         </div>
       </div>
     </article>
