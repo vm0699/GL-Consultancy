@@ -6,11 +6,13 @@ import Link from "next/link";
 import { colleges } from "@/data/colleges";
 import { feeRecords as srmFeeRecords, type FeeRecord } from "@/data/srmfees";
 import { vitFeeRecords } from "@/data/vitfees";
+import { sathyabamaFeeRecords } from "@/data/sathyabamafees";
+import { saveethaFeeRecords } from "@/data/saveethafees";
 
 export default function CollegeDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const slug = params.slug as string;
+  const slug: string = params.slug as string;
 
   const [selectedCampus, setSelectedCampus] = useState<string>("All Campuses");
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,9 +41,11 @@ export default function CollegeDetailPage() {
   // --- CASCADING FILTER LOGIC ---
 
   // Get appropriate fee records based on college
-  const feeRecords = useMemo(() => {
+  const feeRecords: FeeRecord[] = useMemo(() => {
     if (slug === "srm") return srmFeeRecords;
     if (slug === "vit") return vitFeeRecords;
+    if (slug === "sathyabama") return sathyabamaFeeRecords;
+    if (slug === "saveetha") return saveethaFeeRecords;
     return [];
   }, [slug]);
 
@@ -78,7 +82,7 @@ export default function CollegeDetailPage() {
   if (!college) return null;
 
   // For colleges other than SRM and VIT, show coming soon
-  if (slug !== "srm" && slug !== "vit") {
+  if (slug !== "srm" && slug !== "vit" && slug !== "sathyabama" && slug !== "saveetha") {
     return (
       <div className="min-h-screen bg-[#faf8f3] py-12">
         <div className="max-w-4xl mx-auto px-4">
@@ -101,9 +105,10 @@ export default function CollegeDetailPage() {
     if (!userInfo) {
       setShowLoginPopup(true);
     } else {
-      const url = slug === "srm"
-        ? "https://www.srmist.edu.in/admissions"
-        : "https://vit.ac.in/admissions";
+      let url = "https://www.srmist.edu.in/admissions";
+      if (slug === "vit") url = "https://vit.ac.in/admissions";
+      if (slug === "sathyabama") url = "https://www.sathyabama.ac.in/admissions";
+      if (slug === "saveetha") url = "https://www.saveetha.ac.in/admissions";
       window.open(url, "_blank");
     }
   };
@@ -114,9 +119,10 @@ export default function CollegeDetailPage() {
     sessionStorage.setItem("userInfo", JSON.stringify(userData));
     setShowLoginPopup(false);
     // Open application portal after login
-    const url = slug === "srm"
-      ? "https://www.srmist.edu.in/admissions"
-      : "https://vit.ac.in/admissions";
+    let url = "https://www.srmist.edu.in/admissions";
+    if (slug === "vit") url = "https://vit.ac.in/admissions";
+    if (slug === "sathyabama") url = "https://www.sathyabama.ac.in/admissions";
+    if (slug === "saveetha") url = "https://www.saveetha.ac.in/admissions";
     window.open(url, "_blank");
   };
 
@@ -188,11 +194,46 @@ export default function CollegeDetailPage() {
                 </p>
               </div>
             )}
+            {slug === "sathyabama" && (
+              <div className="space-y-4">
+                <p className="text-gray-700 leading-relaxed">
+                  Sathyabama Institute of Science and Technology is a prestigious deemed-to-be university established in 1987, located in Chennai, Tamil Nadu. Known for its commitment to excellence in education, research, and innovation, Sathyabama has emerged as one of South India's leading technical institutions, consistently ranked among the top universities by NIRF and other national ranking bodies.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  The institute offers a comprehensive range of undergraduate, postgraduate, and doctoral programs across engineering, science, management, medical, and dental sciences. With a sprawling 600-acre campus in Jeppiaar Nagar, Sathyabama provides state-of-the-art infrastructure including advanced research laboratories, well-stocked libraries, modern classrooms, and excellent sports facilities. The university attracts students from across India and abroad, fostering a diverse and vibrant academic community.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  Sathyabama holds NAAC A++ accreditation and is recognized by UGC under Section 3 of the UGC Act. The university emphasizes hands-on learning, industry collaboration, and research excellence, with numerous patents, publications, and innovation projects to its credit. Strong placement records with leading MNCs, dedicated entrepreneurship cells, and extensive industry partnerships ensure students are well-prepared for successful careers. With holistic development programs and vibrant campus life, Sathyabama nurtures future leaders and innovators.
+                </p>
+              </div>
+            )}
+            {slug === "saveetha" && (
+              <div className="space-y-4">
+                <p className="text-gray-700 leading-relaxed">
+                  Saveetha Institute of Medical and Technical Sciences (SIMATS) is a prestigious deemed-to-be university established in 2005, located in Chennai, Tamil Nadu. Recognized as one of India's premier multi-disciplinary institutions, SIMATS offers comprehensive programs across medicine, dentistry, engineering, nursing, law, management, and allied health sciences. The university has earned a stellar reputation for its commitment to quality education, advanced research facilities, and strong emphasis on practical training.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  The sprawling 600-acre campus in Thandalam houses state-of-the-art infrastructure including a 2000+ bed multispecialty teaching hospital, cutting-edge research laboratories, modern dental hospital, well-equipped engineering workshops, digital libraries, and world-class sports facilities. SIMATS attracts over 25,000 students from across India and abroad, creating a vibrant, diverse academic community supported by highly qualified faculty and industry experts.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                  SIMATS holds NAAC A accreditation and is recognized by UGC, MCI, DCI, AICTE, and other statutory bodies. The university emphasizes experiential learning, clinical exposure, and industry collaboration, ensuring students are well-prepared for professional success. With impressive placement records across all streams, dedicated training & placement cells, entrepreneurship support, and extensive alumni network in leading organizations worldwide, SIMATS continues to be a preferred choice for aspiring professionals seeking holistic education and career excellence.
+                </p>
+              </div>
+            )}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-              <StatBox label="Established" value={slug === "srm" ? "1985" : "1984"} />
-              <StatBox label="Students" value={slug === "srm" ? "50K+" : "40K+"} />
+              <StatBox
+                label="Established"
+                value={slug === "srm" ? "1985" : (slug === "vit" ? "1984" : (slug === "sathyabama" ? "1987" : "2005"))}
+              />
+              <StatBox
+                label="Students"
+                value={slug === "srm" ? "50K+" : (slug === "vit" ? "40K+" : (slug === "sathyabama" ? "30K+" : "25K+"))}
+              />
               <StatBox label="Programs" value={`${feeRecords.length}+`} />
-              <StatBox label="NAAC Grade" value={slug === "srm" ? "A++" : "A++"} />
+              <StatBox
+                label="NAAC Grade"
+                value={slug === "saveetha" ? "A" : "A++"}
+              />
             </div>
           </div>
         </section>

@@ -50,6 +50,7 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/256490/pexels-photo-256490.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Engineering", "Medical", "NAAC A"],
+    slug: "saveetha",
     avgPackage: "5.8 LPA",
     highestPackage: "25 LPA",
   },
@@ -62,6 +63,7 @@ export const colleges: College[] = [
     rating: 4.5,
     imageUrl: "/sathyabama-university.png",
     tags: ["Engineering", "NAAC A++", "Research"],
+    slug: "sathyabama",
     avgPackage: "5.5 LPA",
     highestPackage: "28 LPA",
   },

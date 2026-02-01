@@ -4,10 +4,12 @@ import { useMemo, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { feeRecords as srmFeeRecords, type FeeRecord } from "@/data/srmfees";
 import { vitFeeRecords } from "@/data/vitfees";
+import { sathyabamaFeeRecords } from "@/data/sathyabamafees";
+import { saveethaFeeRecords } from "@/data/saveethafees";
 import LoginPopup from "@/components/LoginPopup";
 
-// Merge SRM and VIT fee records
-const feeRecords = [...srmFeeRecords, ...vitFeeRecords];
+// Merge SRM, VIT, Sathyabama, and Saveetha fee records
+const feeRecords = [...srmFeeRecords, ...vitFeeRecords, ...sathyabamaFeeRecords, ...saveethaFeeRecords];
 
 type FilterState = {
     college: string;
@@ -35,20 +37,57 @@ export default function FeesClient() {
     const [showLoginPopup, setShowLoginPopup] = useState(false);
     const [userInfo, setUserInfo] = useState<{ name: string; phone: string } | null>(null);
 
-    // Authentication Logic
+    // localStorage key for persistence
+    const STORAGE_KEY = "fee_page_user";
+
+    // Authentication Logic - Check localStorage on mount
     useEffect(() => {
-        const storedUserInfo = sessionStorage.getItem("userInfo");
+        // Only run on client-side
+        if (typeof window === "undefined") return;
+
+        const storedUserInfo = localStorage.getItem(STORAGE_KEY);
         if (storedUserInfo) {
-            setUserInfo(JSON.parse(storedUserInfo));
-        } else {
-            setShowLoginPopup(true);
+            try {
+                const parsed = JSON.parse(storedUserInfo);
+                // Validate stored data has required fields
+                if (parsed.name && parsed.phone) {
+                    setUserInfo(parsed);
+                    return;
+                }
+            } catch {
+                // Invalid JSON, remove it
+                localStorage.removeItem(STORAGE_KEY);
+            }
         }
+        // No valid stored data, show popup
+        setShowLoginPopup(true);
     }, []);
 
-    const handleLoginSubmit = (name: string, phone: string) => {
+    const handleLoginSubmit = async (name: string, phone: string): Promise<void> => {
+        // Call API to submit data to Google Sheets
+        const response = await fetch("/api/fee-lock", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name,
+                phone,
+                pageName: "Fee Page",
+                source: "fee-lock",
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Failed to submit. Please try again.");
+        }
+
+        // Only save to localStorage after successful API response
         const userData = { name, phone };
         setUserInfo(userData);
-        sessionStorage.setItem("userInfo", JSON.stringify(userData));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
         setShowLoginPopup(false);
     };
 
@@ -100,12 +139,12 @@ export default function FeesClient() {
             if (filters.level !== "All" && f.level !== filters.level) return false;
             if (filters.program !== "All" && f.program !== filters.program) return false;
             if (filters.branch !== "All" && f.branch !== filters.branch) return false;
-            
+
             // New Category Logic for VIT
             if (filters.college.toLowerCase().includes("vit")) {
                 if (filters.category !== "All" && !f.branch.includes(filters.category)) return false;
             }
-            
+
             return true;
         });
     }, [filters]);
@@ -135,104 +174,114 @@ export default function FeesClient() {
 
     return (
         <main className="min-h-screen bg-[#faf8f3] text-[#1e2749] pb-20">
-            <div className="mx-auto max-w-5xl px-4 py-16">
-                <header className="border-b border-amber-100 pb-8">
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-                        Fee Structure <span className="text-amber-600">2026</span>
-                    </h1>
-                    <p className="mt-4 text-sm md:text-base text-[#4a5568] max-w-2xl leading-relaxed">
-                        Comparing VIT and SRM? Select a college to see specific categories and branch-wise structures.
-                    </p>
-                </header>
-
-                {/* Filters Section */}
-                <section className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3 bg-white p-6 rounded-3xl shadow-sm border border-amber-50 transition-all">
-                    <SelectBox
-                        label="College"
-                        value={filters.college}
-                        options={colleges}
-                        onChange={(v) => updateFilter("college", v)}
-                    />
-                    
-                    {/* Only show Category if VIT is selected */}
-                    {isVitSelected && (
-                        <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                            <SelectBox
-                                label="Admission Category"
-                                value={filters.category}
-                                options={categories}
-                                onChange={(v) => updateFilter("category", v)}
-                            />
-                        </div>
-                    )}
-
-                    <SelectBox
-                        label="Campus"
-                        value={filters.campus}
-                        options={campuses}
-                        onChange={(v) => updateFilter("campus", v)}
-                    />
-                    <SelectBox
-                        label="Level"
-                        value={filters.level}
-                        options={levels}
-                        onChange={(v) => updateFilter("level", v)}
-                    />
-                    <SelectBox
-                        label="Program"
-                        value={filters.program}
-                        options={programs}
-                        onChange={(v) => updateFilter("program", v)}
-                    />
-                    <SelectBox
-                        label="Branch / Specialisation"
-                        value={filters.branch}
-                        options={branches}
-                        onChange={(v) => updateFilter("branch", v)}
-                    />
-                </section>
-
-                {/* Results Section */}
-                <section className="mt-12">
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-lg font-semibold uppercase tracking-wider text-[#6b7280]">
-                            Matching Records ({filteredFees.length})
-                        </h2>
-                        {(filters.college !== "All" || filters.branch !== "All") && (
-                            <button
-                                onClick={() => setFilters({ college: "All", campus: "All", level: "All", program: "All", branch: "All", category: "All" })}
-                                className="text-sm text-amber-600 font-medium hover:underline"
-                            >
-                                Clear all filters
-                            </button>
-                        )}
+            {/* Show loading or empty state while checking authentication */}
+            {!userInfo && showLoginPopup ? (
+                <div className="mx-auto max-w-5xl px-4 py-16">
+                    <div className="rounded-3xl border border-amber-100 bg-white p-8 shadow-sm text-center">
+                        <p className="text-sm text-[#6b7280]">Please login to view fee information...</p>
                     </div>
+                </div>
+            ) : (
+                <div className="mx-auto max-w-5xl px-4 py-16">
+                    <header className="border-b border-amber-100 pb-8">
+                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+                            Fee Structure <span className="text-amber-600">2026</span>
+                        </h1>
+                        <p className="mt-4 text-sm md:text-base text-[#4a5568] max-w-2xl leading-relaxed">
+                            Comparing VIT and SRM? Select a college to see specific categories and branch-wise structures.
+                        </p>
+                    </header>
 
-                    <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
-                        {filteredFees.length === 0 ? (
-                            <div className="col-span-full py-20 text-center bg-white rounded-3xl border border-dashed border-amber-200">
-                                <p className="text-[#6b7280]">No matching records found for this combination.</p>
+                    {/* Filters Section */}
+                    <section className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3 bg-white p-6 rounded-3xl shadow-sm border border-amber-50 transition-all">
+                        <SelectBox
+                            label="College"
+                            value={filters.college}
+                            options={colleges}
+                            onChange={(v) => updateFilter("college", v)}
+                        />
+
+                        {/* Only show Category if VIT is selected */}
+                        {isVitSelected && (
+                            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                                <SelectBox
+                                    label="Admission Category"
+                                    value={filters.category}
+                                    options={categories}
+                                    onChange={(v) => updateFilter("category", v)}
+                                />
                             </div>
-                        ) : (
-                            filteredFees.map((fee) => (
-                                <FeeCard key={fee.id} record={fee} />
-                            ))
                         )}
-                    </div>
-                </section>
 
-                <footer className="mt-12 p-6 bg-amber-50 rounded-2xl border border-amber-100">
-                    <p className="text-xs text-[#6b7280] leading-relaxed">
-                        * All values shown are indicative. VIT Fees are structured by categories (1-5) based on VITEEE performance. 
-                        Final category allocation is determined during counseling.
-                    </p>
-                </footer>
-            </div>
+                        <SelectBox
+                            label="Campus"
+                            value={filters.campus}
+                            options={campuses}
+                            onChange={(v) => updateFilter("campus", v)}
+                        />
+                        <SelectBox
+                            label="Level"
+                            value={filters.level}
+                            options={levels}
+                            onChange={(v) => updateFilter("level", v)}
+                        />
+                        <SelectBox
+                            label="Program"
+                            value={filters.program}
+                            options={programs}
+                            onChange={(v) => updateFilter("program", v)}
+                        />
+                        <SelectBox
+                            label="Branch / Specialisation"
+                            value={filters.branch}
+                            options={branches}
+                            onChange={(v) => updateFilter("branch", v)}
+                        />
+                    </section>
+
+                    {/* Results Section */}
+                    <section className="mt-12">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-lg font-semibold uppercase tracking-wider text-[#6b7280]">
+                                Matching Records ({filteredFees.length})
+                            </h2>
+                            {(filters.college !== "All" || filters.branch !== "All") && (
+                                <button
+                                    onClick={() => setFilters({ college: "All", campus: "All", level: "All", program: "All", branch: "All", category: "All" })}
+                                    className="text-sm text-amber-600 font-medium hover:underline"
+                                >
+                                    Clear all filters
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
+                            {filteredFees.length === 0 ? (
+                                <div className="col-span-full py-20 text-center bg-white rounded-3xl border border-dashed border-amber-200">
+                                    <p className="text-[#6b7280]">No matching records found for this combination.</p>
+                                </div>
+                            ) : (
+                                filteredFees.map((fee) => (
+                                    <FeeCard key={fee.id} record={fee} />
+                                ))
+                            )}
+                        </div>
+                    </section>
+
+                    <footer className="mt-12 p-6 bg-amber-50 rounded-2xl border border-amber-100">
+                        <p className="text-xs text-[#6b7280] leading-relaxed">
+                            * All values shown are indicative. VIT Fees are structured by categories (1-5) based on VITEEE performance.
+                            Final category allocation is determined during counseling.
+                        </p>
+                    </footer>
+                </div>
+            )}
 
             <LoginPopup
                 isOpen={showLoginPopup}
                 onClose={handleLoginClose}
                 onSubmit={handleLoginSubmit}
+                mandatory={true}
             />
         </main>
     );
@@ -265,7 +314,7 @@ function SelectBox({ label, value, options, onChange }: {
 
 function FeeCard({ record }: { record: FeeRecord }) {
     const isVit = record.collegeId.includes("vit");
-    
+
     return (
         <article className={`group rounded-3xl border ${isVit ? 'border-amber-100 bg-white' : 'border-transparent bg-white'} p-6 shadow-sm transition-all hover:shadow-md hover:border-amber-200`}>
             <div className="flex flex-col h-full justify-between">

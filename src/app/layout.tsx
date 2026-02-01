@@ -16,18 +16,13 @@ export default function RootLayout({
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [userInfo, setUserInfo] = useState<{ name: string; phone: string } | null>(null);
 
-  // Show popup on initial load
+  // Check if user has logged in this session (stored in sessionStorage)
   useEffect(() => {
-    // Check if user has logged in this session (stored in sessionStorage)
     const storedUserInfo = sessionStorage.getItem("userInfo");
     if (storedUserInfo) {
       setUserInfo(JSON.parse(storedUserInfo));
     }
-
-    // Always show popup after a short delay on first load
-    setTimeout(() => {
-      setShowLoginPopup(true);
-    }, 500);
+    // Removed auto-popup - login is now only required for protected pages like /fees
   }, []);
 
   const handleLoginSubmit = (name: string, phone: string) => {
