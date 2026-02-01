@@ -34,33 +34,36 @@ export default function FeesClient() {
         category: "All",
     });
 
-    const [showLoginPopup, setShowLoginPopup] = useState(false);
+    // Popup starts as OPEN, only closes if localStorage has valid user data
+    const [showLoginPopup, setShowLoginPopup] = useState(true);
     const [userInfo, setUserInfo] = useState<{ name: string; phone: string } | null>(null);
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
     // localStorage key for persistence
     const STORAGE_KEY = "fee_page_user";
 
-    // Authentication Logic - Check localStorage on mount
+    // Check localStorage on mount - only CLOSE popup if user already submitted
     useEffect(() => {
         // Only run on client-side
         if (typeof window === "undefined") return;
 
-        const storedUserInfo = localStorage.getItem(STORAGE_KEY);
-        if (storedUserInfo) {
-            try {
+        try {
+            const storedUserInfo = localStorage.getItem(STORAGE_KEY);
+            if (storedUserInfo) {
                 const parsed = JSON.parse(storedUserInfo);
                 // Validate stored data has required fields
-                if (parsed.name && parsed.phone) {
+                if (parsed && parsed.name && parsed.phone) {
+                    // User already submitted - hide popup and unlock content
                     setUserInfo(parsed);
-                    return;
+                    setShowLoginPopup(false);
                 }
-            } catch {
-                // Invalid JSON, remove it
-                localStorage.removeItem(STORAGE_KEY);
             }
+        } catch {
+            // Invalid JSON, remove it
+            localStorage.removeItem(STORAGE_KEY);
         }
-        // No valid stored data, show popup
-        setShowLoginPopup(true);
+
+        setIsCheckingAuth(false);
     }, []);
 
     const handleLoginSubmit = async (name: string, phone: string): Promise<void> => {
@@ -174,8 +177,14 @@ export default function FeesClient() {
 
     return (
         <main className="min-h-screen bg-[#faf8f3] text-[#1e2749] pb-20">
-            {/* Show loading or empty state while checking authentication */}
-            {!userInfo && showLoginPopup ? (
+            {/* Show loading state while checking auth */}
+            {isCheckingAuth ? (
+                <div className="mx-auto max-w-5xl px-4 py-16">
+                    <div className="rounded-3xl border border-amber-100 bg-white p-8 shadow-sm text-center">
+                        <p className="text-sm text-[#6b7280]">Loading...</p>
+                    </div>
+                </div>
+            ) : !userInfo && showLoginPopup ? (
                 <div className="mx-auto max-w-5xl px-4 py-16">
                     <div className="rounded-3xl border border-amber-100 bg-white p-8 shadow-sm text-center">
                         <p className="text-sm text-[#6b7280]">Please login to view fee information...</p>
