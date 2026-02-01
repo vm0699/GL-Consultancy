@@ -69,6 +69,19 @@ export const colleges: College[] = [
   },
   {
     id: "5",
+    name: "Loyola College",
+    area: "Nungambakkam, Chennai",
+    affiliation: "University of Madras",
+    popularCourses: ["B.A. Economics", "B.Com", "M.A. English"],
+    rating: 4.8,
+    imageUrl:
+      "https://images.pexels.com/photos/256490/pexels-photo-256490.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    tags: ["Arts & Science", "Autonomous", "NAAC A++"],
+    avgPackage: "5.0 LPA",
+    highestPackage: "18 LPA",
+  },
+  {
+    id: "6",
     name: "SRM Easwari Engineering College",
     area: "Ramapuram, Chennai",
     affiliation: "Anna University",
@@ -80,7 +93,7 @@ export const colleges: College[] = [
     highestPackage: "15 LPA",
   },
   {
-    id: "6",
+    id: "7",
     name: "SRM Valliammai Engineering College",
     area: "Kattankulathur, Chennai",
     affiliation: "Anna University",
@@ -118,7 +131,7 @@ export const colleges: College[] = [
     highestPackage: "22 LPA",
   },
   {
-    id: "7",
+    id: "18",
     name: "Bharath Institute of Higher Education and Research",
     area: "Selaiyur, Chennai",
     affiliation: "Deemed-to-be University",
