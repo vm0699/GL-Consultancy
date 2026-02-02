@@ -8,6 +8,7 @@ import { feeRecords as srmFeeRecords, type FeeRecord } from "@/data/srmfees";
 import { vitFeeRecords } from "@/data/vitfees";
 import { sathyabamaFeeRecords } from "@/data/sathyabamafees";
 import { saveethaFeeRecords } from "@/data/saveethafees";
+import { collegeCourseMap, collegeDescriptions } from "@/data/genericColleges";
 
 export default function CollegeDetailPage() {
   const params = useParams();
@@ -46,6 +47,8 @@ export default function CollegeDetailPage() {
     if (slug === "vit") return vitFeeRecords;
     if (slug === "sathyabama") return sathyabamaFeeRecords;
     if (slug === "saveetha") return saveethaFeeRecords;
+    // Check generic colleges
+    if (collegeCourseMap[slug]) return collegeCourseMap[slug];
     return [];
   }, [slug]);
 
@@ -81,35 +84,36 @@ export default function CollegeDetailPage() {
 
   if (!college) return null;
 
-  // For colleges other than SRM and VIT, show coming soon
-  if (slug !== "srm" && slug !== "vit" && slug !== "sathyabama" && slug !== "saveetha") {
-    return (
-      <div className="min-h-screen bg-[#faf8f3] py-12">
-        <div className="max-w-4xl mx-auto px-4">
-          <Link href="/" className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 mb-8 transition-colors">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back to Home
-          </Link>
-          <div className="text-center py-20">
-            <h1 className="text-3xl font-bold text-[#1e2749] mb-4">{college.name}</h1>
-            <p className="text-gray-600">Detailed information coming soon!</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Get application URL for college
+  const getApplicationUrl = () => {
+    const urlMap: Record<string, string> = {
+      srm: "https://www.srmist.edu.in/admissions",
+      vit: "https://vit.ac.in/admissions",
+      sathyabama: "https://www.sathyabama.ac.in/admissions",
+      saveetha: "https://www.saveetha.ac.in/admissions",
+      loyola: "https://www.loyolacollege.edu/admissions",
+      "srm-easwari": "https://srmeaswari.ac.in/admissions",
+      "srm-valliammai": "https://valliammai.co.in/admissions",
+      hindustan: "https://www.hindustanuniv.ac.in/admissions",
+      "sri-ramachandra": "https://www.sriramachandra.edu.in/admissions",
+      bharath: "https://www.bharathuniv.ac.in/admissions",
+      vels: "https://velsuniv.ac.in/admissions",
+      amet: "https://www.ametuniv.ac.in/admissions",
+      "dr-mgr": "https://drmgrdu.ac.in/admissions",
+      prist: "https://www.prist.ac.in/admissions",
+      crescent: "https://www.crescent.education/admissions",
+      veltech: "https://www.veltech.edu.in/admissions",
+      meenakshi: "https://www.maher.ac.in/admissions",
+      chettinad: "https://www.chettinadhealthcity.com/admissions",
+    };
+    return urlMap[slug] || `https://www.google.com/search?q=${encodeURIComponent(college.name)}+admissions`;
+  };
 
   const handleApplicationAccess = () => {
     if (!userInfo) {
       setShowLoginPopup(true);
     } else {
-      let url = "https://www.srmist.edu.in/admissions";
-      if (slug === "vit") url = "https://vit.ac.in/admissions";
-      if (slug === "sathyabama") url = "https://www.sathyabama.ac.in/admissions";
-      if (slug === "saveetha") url = "https://www.saveetha.ac.in/admissions";
-      window.open(url, "_blank");
+      window.open(getApplicationUrl(), "_blank");
     }
   };
 
@@ -119,11 +123,7 @@ export default function CollegeDetailPage() {
     sessionStorage.setItem("userInfo", JSON.stringify(userData));
     setShowLoginPopup(false);
     // Open application portal after login
-    let url = "https://www.srmist.edu.in/admissions";
-    if (slug === "vit") url = "https://vit.ac.in/admissions";
-    if (slug === "sathyabama") url = "https://www.sathyabama.ac.in/admissions";
-    if (slug === "saveetha") url = "https://www.saveetha.ac.in/admissions";
-    window.open(url, "_blank");
+    window.open(getApplicationUrl(), "_blank");
   };
 
   const handleFeeAccess = () => {
@@ -168,71 +168,86 @@ export default function CollegeDetailPage() {
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-[#1e2749] mb-6">About {college.name}</h2>
           <div className="bg-white rounded-2xl border border-amber-200 p-8 shadow-sm">
-            {slug === "srm" && (
-              <div className="space-y-4">
-                <p className="text-gray-700 leading-relaxed">
-                  SRM Institute of Science and Technology (SRMIST) is one of India's premier deemed-to-be universities, recognized for its academic excellence and cutting-edge research facilities. Established in 1985, SRMIST has grown into a multi-campus institution with state-of-the-art infrastructure spread across Kattankulathur, Ramapuram, and Vadapalani campuses in Tamil Nadu.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  The university offers a comprehensive range of undergraduate, postgraduate, and doctoral programs across engineering, management, medical sciences, and humanities. With a student strength of over 50,000 and a highly qualified faculty, SRMIST maintains a robust industry interface, ensuring students receive practical exposure through internships, projects, and placements with top-tier companies.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  SRMIST holds NAAC A++ accreditation and consistently ranks among India's top private universities. The institution emphasizes research and innovation, with numerous patents and publications to its credit. Students benefit from world-class laboratories, an extensive library, sports facilities, and vibrant campus life, making SRMIST a holistic educational destination for aspiring professionals.
-                </p>
-              </div>
-            )}
-            {slug === "vit" && (
-              <div className="space-y-4">
-                <p className="text-gray-700 leading-relaxed">
-                  VIT (Vellore Institute of Technology) is a prestigious deemed-to-be university established in 1984, renowned for its excellence in engineering education, research, and global collaborations. With campuses in Vellore and Chennai, VIT has earned a stellar reputation as one of India's leading technical institutions, consistently ranked among the top universities by NIRF and other national ranking bodies.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  The university offers a diverse portfolio of programs across engineering, technology, sciences, and management, attracting over 40,000 students from all corners of India and abroad. VIT's unique admission process through VITEEE ensures merit-based selection, fostering a competitive yet collaborative academic environment. The institution prides itself on its world-class infrastructure, including advanced research centers, well-equipped laboratories, and extensive digital libraries.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  VIT maintains strong industry partnerships with global corporations, facilitating exceptional placement opportunities, internships, and live projects for students. The university's emphasis on research and innovation is reflected in its numerous patents, international publications, and entrepreneurship initiatives. With NAAC A++ accreditation and a commitment to holistic development, VIT prepares students to become industry-ready professionals and future leaders in their respective fields.
-                </p>
-              </div>
-            )}
-            {slug === "sathyabama" && (
-              <div className="space-y-4">
-                <p className="text-gray-700 leading-relaxed">
-                  Sathyabama Institute of Science and Technology is a prestigious deemed-to-be university established in 1987, located in Chennai, Tamil Nadu. Known for its commitment to excellence in education, research, and innovation, Sathyabama has emerged as one of South India's leading technical institutions, consistently ranked among the top universities by NIRF and other national ranking bodies.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  The institute offers a comprehensive range of undergraduate, postgraduate, and doctoral programs across engineering, science, management, medical, and dental sciences. With a sprawling 600-acre campus in Jeppiaar Nagar, Sathyabama provides state-of-the-art infrastructure including advanced research laboratories, well-stocked libraries, modern classrooms, and excellent sports facilities. The university attracts students from across India and abroad, fostering a diverse and vibrant academic community.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  Sathyabama holds NAAC A++ accreditation and is recognized by UGC under Section 3 of the UGC Act. The university emphasizes hands-on learning, industry collaboration, and research excellence, with numerous patents, publications, and innovation projects to its credit. Strong placement records with leading MNCs, dedicated entrepreneurship cells, and extensive industry partnerships ensure students are well-prepared for successful careers. With holistic development programs and vibrant campus life, Sathyabama nurtures future leaders and innovators.
-                </p>
-              </div>
-            )}
-            {slug === "saveetha" && (
-              <div className="space-y-4">
-                <p className="text-gray-700 leading-relaxed">
-                  Saveetha Institute of Medical and Technical Sciences (SIMATS) is a prestigious deemed-to-be university established in 2005, located in Chennai, Tamil Nadu. Recognized as one of India's premier multi-disciplinary institutions, SIMATS offers comprehensive programs across medicine, dentistry, engineering, nursing, law, management, and allied health sciences. The university has earned a stellar reputation for its commitment to quality education, advanced research facilities, and strong emphasis on practical training.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  The sprawling 600-acre campus in Thandalam houses state-of-the-art infrastructure including a 2000+ bed multispecialty teaching hospital, cutting-edge research laboratories, modern dental hospital, well-equipped engineering workshops, digital libraries, and world-class sports facilities. SIMATS attracts over 25,000 students from across India and abroad, creating a vibrant, diverse academic community supported by highly qualified faculty and industry experts.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  SIMATS holds NAAC A accreditation and is recognized by UGC, MCI, DCI, AICTE, and other statutory bodies. The university emphasizes experiential learning, clinical exposure, and industry collaboration, ensuring students are well-prepared for professional success. With impressive placement records across all streams, dedicated training & placement cells, entrepreneurship support, and extensive alumni network in leading organizations worldwide, SIMATS continues to be a preferred choice for aspiring professionals seeking holistic education and career excellence.
-                </p>
-              </div>
-            )}
+            {/* Dynamic description content */}
+            {(() => {
+              // First check hardcoded descriptions for main colleges
+              const hardcodedDescriptions: Record<string, string[]> = {
+                srm: [
+                  "SRM Institute of Science and Technology (SRMIST) is one of India's premier deemed-to-be universities, recognized for its academic excellence and cutting-edge research facilities. Established in 1985, SRMIST has grown into a multi-campus institution with state-of-the-art infrastructure spread across Kattankulathur, Ramapuram, and Vadapalani campuses in Tamil Nadu.",
+                  "The university offers a comprehensive range of undergraduate, postgraduate, and doctoral programs across engineering, management, medical sciences, and humanities. With a student strength of over 50,000 and a highly qualified faculty, SRMIST maintains a robust industry interface, ensuring students receive practical exposure through internships, projects, and placements with top-tier companies.",
+                  "SRMIST holds NAAC A++ accreditation and consistently ranks among India's top private universities. The institution emphasizes research and innovation, with numerous patents and publications to its credit. Students benefit from world-class laboratories, an extensive library, sports facilities, and vibrant campus life, making SRMIST a holistic educational destination for aspiring professionals.",
+                ],
+                vit: [
+                  "VIT (Vellore Institute of Technology) is a prestigious deemed-to-be university established in 1984, renowned for its excellence in engineering education, research, and global collaborations. With campuses in Vellore and Chennai, VIT has earned a stellar reputation as one of India's leading technical institutions, consistently ranked among the top universities by NIRF and other national ranking bodies.",
+                  "The university offers a diverse portfolio of programs across engineering, technology, sciences, and management, attracting over 40,000 students from all corners of India and abroad. VIT's unique admission process through VITEEE ensures merit-based selection, fostering a competitive yet collaborative academic environment. The institution prides itself on its world-class infrastructure, including advanced research centers, well-equipped laboratories, and extensive digital libraries.",
+                  "VIT maintains strong industry partnerships with global corporations, facilitating exceptional placement opportunities, internships, and live projects for students. The university's emphasis on research and innovation is reflected in its numerous patents, international publications, and entrepreneurship initiatives. With NAAC A++ accreditation and a commitment to holistic development, VIT prepares students to become industry-ready professionals and future leaders in their respective fields.",
+                ],
+                sathyabama: [
+                  "Sathyabama Institute of Science and Technology is a prestigious deemed-to-be university established in 1987, located in Chennai, Tamil Nadu. Known for its commitment to excellence in education, research, and innovation, Sathyabama has emerged as one of South India's leading technical institutions, consistently ranked among the top universities by NIRF and other national ranking bodies.",
+                  "The institute offers a comprehensive range of undergraduate, postgraduate, and doctoral programs across engineering, science, management, medical, and dental sciences. With a sprawling 600-acre campus in Jeppiaar Nagar, Sathyabama provides state-of-the-art infrastructure including advanced research laboratories, well-stocked libraries, modern classrooms, and excellent sports facilities. The university attracts students from across India and abroad, fostering a diverse and vibrant academic community.",
+                  "Sathyabama holds NAAC A++ accreditation and is recognized by UGC under Section 3 of the UGC Act. The university emphasizes hands-on learning, industry collaboration, and research excellence, with numerous patents, publications, and innovation projects to its credit. Strong placement records with leading MNCs, dedicated entrepreneurship cells, and extensive industry partnerships ensure students are well-prepared for successful careers. With holistic development programs and vibrant campus life, Sathyabama nurtures future leaders and innovators.",
+                ],
+                saveetha: [
+                  "Saveetha Institute of Medical and Technical Sciences (SIMATS) is a prestigious deemed-to-be university established in 2005, located in Chennai, Tamil Nadu. Recognized as one of India's premier multi-disciplinary institutions, SIMATS offers comprehensive programs across medicine, dentistry, engineering, nursing, law, management, and allied health sciences. The university has earned a stellar reputation for its commitment to quality education, advanced research facilities, and strong emphasis on practical training.",
+                  "The sprawling 600-acre campus in Thandalam houses state-of-the-art infrastructure including a 2000+ bed multispecialty teaching hospital, cutting-edge research laboratories, modern dental hospital, well-equipped engineering workshops, digital libraries, and world-class sports facilities. SIMATS attracts over 25,000 students from across India and abroad, creating a vibrant, diverse academic community supported by highly qualified faculty and industry experts.",
+                  "SIMATS holds NAAC A accreditation and is recognized by UGC, MCI, DCI, AICTE, and other statutory bodies. The university emphasizes experiential learning, clinical exposure, and industry collaboration, ensuring students are well-prepared for professional success. With impressive placement records across all streams, dedicated training & placement cells, entrepreneurship support, and extensive alumni network in leading organizations worldwide, SIMATS continues to be a preferred choice for aspiring professionals seeking holistic education and career excellence.",
+                ],
+              };
+
+              const descriptions = hardcodedDescriptions[slug] || collegeDescriptions[slug] || [
+                `${college.name} is a reputed educational institution located in Chennai, Tamil Nadu. The institution is known for its commitment to academic excellence and student development.`,
+                `The institution offers various undergraduate and postgraduate programs with modern facilities and experienced faculty. Students benefit from a supportive learning environment and industry-relevant curriculum.`,
+                `With strong placement support and focus on holistic development, ${college.name} prepares students for successful careers in their chosen fields.`,
+              ];
+
+              return (
+                <div className="space-y-4">
+                  {descriptions.map((para, idx) => (
+                    <p key={idx} className="text-gray-700 leading-relaxed">{para}</p>
+                  ))}
+                </div>
+              );
+            })()}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
               <StatBox
                 label="Established"
-                value={slug === "srm" ? "1985" : (slug === "vit" ? "1984" : (slug === "sathyabama" ? "1987" : "2005"))}
+                value={(() => {
+                  const years: Record<string, string> = {
+                    srm: "1985", vit: "1984", sathyabama: "1987", saveetha: "2005",
+                    loyola: "1925", "srm-easwari": "1996", "srm-valliammai": "1999",
+                    hindustan: "1985", "sri-ramachandra": "1985", bharath: "1984",
+                    vels: "1992", amet: "1993", "dr-mgr": "1988", prist: "1985",
+                    crescent: "1984", veltech: "1990", meenakshi: "1999", chettinad: "1993",
+                  };
+                  return years[slug] || "1990";
+                })()}
               />
               <StatBox
                 label="Students"
-                value={slug === "srm" ? "50K+" : (slug === "vit" ? "40K+" : (slug === "sathyabama" ? "30K+" : "25K+"))}
+                value={(() => {
+                  const students: Record<string, string> = {
+                    srm: "50K+", vit: "40K+", sathyabama: "30K+", saveetha: "25K+",
+                    loyola: "15K+", "srm-easwari": "8K+", "srm-valliammai": "6K+",
+                    hindustan: "18K+", "sri-ramachandra": "10K+", bharath: "15K+",
+                    vels: "20K+", amet: "5K+", "dr-mgr": "12K+", prist: "8K+",
+                    crescent: "10K+", veltech: "12K+", meenakshi: "8K+", chettinad: "3K+",
+                  };
+                  return students[slug] || "10K+";
+                })()}
               />
               <StatBox label="Programs" value={`${feeRecords.length}+`} />
               <StatBox
                 label="NAAC Grade"
-                value={slug === "saveetha" ? "A" : "A++"}
+                value={(() => {
+                  const grades: Record<string, string> = {
+                    srm: "A++", vit: "A++", sathyabama: "A++", saveetha: "A",
+                    loyola: "A++", "srm-easwari": "A", "srm-valliammai": "A",
+                    hindustan: "A", "sri-ramachandra": "A+", bharath: "A",
+                    vels: "A++", amet: "A", "dr-mgr": "A", prist: "A",
+                    crescent: "A", veltech: "A", meenakshi: "A+", chettinad: "A",
+                  };
+                  return grades[slug] || "A";
+                })()}
               />
             </div>
           </div>

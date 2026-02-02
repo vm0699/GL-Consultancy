@@ -79,6 +79,7 @@ export const colleges: College[] = [
     tags: ["Arts & Science", "Autonomous", "NAAC A++"],
     avgPackage: "5.0 LPA",
     highestPackage: "18 LPA",
+    slug: "loyola",
   },
   {
     id: "6",
@@ -91,6 +92,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "AICTE Approved", "NBA Accredited"],
     avgPackage: "4.2 LPA",
     highestPackage: "15 LPA",
+    slug: "srm-easwari",
   },
   {
     id: "7",
@@ -103,6 +105,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "AICTE Approved", "Anna University"],
     avgPackage: "4.5 LPA",
     highestPackage: "18 LPA",
+    slug: "srm-valliammai",
   },
   {
     id: "8",
@@ -116,6 +119,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "NAAC A", "Aerospace"],
     avgPackage: "5.0 LPA",
     highestPackage: "20 LPA",
+    slug: "hindustan",
   },
   {
     id: "9",
@@ -129,6 +133,7 @@ export const colleges: College[] = [
     tags: ["Medical", "NAAC A+", "Research"],
     avgPackage: "6.0 LPA",
     highestPackage: "22 LPA",
+    slug: "sri-ramachandra",
   },
   {
     id: "18",
@@ -142,6 +147,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "Medical", "Multidisciplinary"],
     avgPackage: "4.8 LPA",
     highestPackage: "16 LPA",
+    slug: "bharath",
   },
   {
     id: "10",
@@ -155,6 +161,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "Management", "NAAC A++"],
     avgPackage: "4.0 LPA",
     highestPackage: "14 LPA",
+    slug: "vels",
   },
   {
     id: "11",
@@ -168,6 +175,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "Marine", "Maritime"],
     avgPackage: "5.2 LPA",
     highestPackage: "18 LPA",
+    slug: "amet",
   },
   {
     id: "12",
@@ -181,6 +189,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "Medical", "NAAC A"],
     avgPackage: "4.5 LPA",
     highestPackage: "15 LPA",
+    slug: "dr-mgr",
   },
   {
     id: "13",
@@ -194,6 +203,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "Management", "Pharmacy"],
     avgPackage: "3.8 LPA",
     highestPackage: "12 LPA",
+    slug: "prist",
   },
   {
     id: "14",
@@ -207,6 +217,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "NAAC A", "B.S. Abdur Rahman"],
     avgPackage: "5.5 LPA",
     highestPackage: "22 LPA",
+    slug: "crescent",
   },
   {
     id: "15",
@@ -220,6 +231,7 @@ export const colleges: College[] = [
     tags: ["Engineering", "Research", "Innovation"],
     avgPackage: "4.2 LPA",
     highestPackage: "16 LPA",
+    slug: "veltech",
   },
   {
     id: "16",
@@ -233,6 +245,7 @@ export const colleges: College[] = [
     tags: ["Medical", "Dental", "NAAC A+"],
     avgPackage: "6.5 LPA",
     highestPackage: "24 LPA",
+    slug: "meenakshi",
   },
   {
     id: "17",
@@ -244,5 +257,6 @@ export const colleges: College[] = [
     imageUrl:
       "https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg?auto=compress&cs=tinysrgb&w=1200",
     tags: ["Dental", "Research", "NAAC A"],
+    slug: "chettinad",
   },
 ];
